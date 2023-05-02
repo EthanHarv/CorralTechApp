@@ -6,13 +6,29 @@
 //
 
 import UIKit
+import MapKit
 
 class MainUIViewController: UIViewController {
-
+    @IBOutlet weak var mapView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let coordinate = CLLocationCoordinate2D(
+            latitude: 41.252856, longitude: -96.010055)
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+        setLocations()
         // Do any additional setup after loading the view.
+    }
+    
+    func setLocations() {
+        // TODO: Dummy data, fill with cow locs
+        let testLocation = MKPointAnnotation()
+        testLocation.title = "cow place"
+        testLocation.coordinate = CLLocationCoordinate2D(latitude: 41.252856, longitude: -96.010055)
+        mapView.addAnnotation(testLocation)
     }
     
 

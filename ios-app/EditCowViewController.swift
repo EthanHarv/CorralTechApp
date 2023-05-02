@@ -34,7 +34,7 @@ class EditCowViewController: UIViewController {
          */
         let con: DatabaseConnection = DatabaseConnection()
         let record: Record = Record(cowId: newCowName.text!, birthYear: "1920", vaxStatus: newCowVaccinations.text!, lastWeight: Double(newCowWeight.text!)!, pregStatus: 0, sex: "Intersex")
-        con.updateEntryStmt(newCowName.text!)
+//        con.updateEntryStmt(newCowName.text!)
         
     }
 }
