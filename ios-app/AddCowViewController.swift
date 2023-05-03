@@ -34,5 +34,8 @@ class AddCowViewController: UIViewController {
         let record: Record = Record(cowId: cowName.text!, birthYear: "1920", vaxStatus: cowVaccinations.text!, lastWeight: Double(cowWeight.text!)!, pregStatus: 0, sex: "M")
         con.createRecord(Record: record)
         print(con.dbUrl)
+        
+        print(con.readRecord(cowId: cowName.text!))
+        
     }
 }

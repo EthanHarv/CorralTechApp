@@ -60,5 +60,44 @@ extension DatabaseConnection {
         }
     }
     
+    func readRecord(cowId: String) -> Record{
+        
+        let emptyRecord: Record = Record(cowId: "N/A", birthYear: "N/A", vaxStatus: "N/A" , lastWeight: -1.0 , pregStatus: -1, sex: "N/A")
+        
+        
+        guard self.prepareRetrievalStatement() == SQLITE_OK else { return emptyRecord}
+                
+        defer {
+           // reset the prepared statement on exit.
+           sqlite3_reset(self.readEntryStmt)
+        }
+       
+        //find how to bind a parameter so we can trawl database by cowId
+        
+        if sqlite3_bind_text(self.readEntryStmt, 1, (cowId as NSString).utf8String, -1, nil) != SQLITE_OK {
+            
+                    print("Error binding cowId param.")
+                return emptyRecord;
+            }
+        
+  
+        if(sqlite3_step(readEntryStmt) == SQLITE_ROW){
+            
+            let cowId:String = String(cString: sqlite3_column_text(readEntryStmt, 1));
+            let birthYear = String(cString: sqlite3_column_text(readEntryStmt, 2))
+            let vaxStatus = String(cString: sqlite3_column_text(readEntryStmt, 3))
+            let lastWeight = sqlite3_column_double(readEntryStmt, 4)
+            let pregStatus = sqlite3_column_int(readEntryStmt, 5)
+            let sex = String(cString: sqlite3_column_text(readEntryStmt, 6))
+            
+            let record: Record = Record(cowId: cowId, birthYear: birthYear, vaxStatus: vaxStatus, lastWeight: lastWeight, pregStatus: Int(pregStatus), sex: sex)
+            
+            return record
+            
+        } else {
+            print("No row of cowID \(cowId) found.")
+                  return emptyRecord;
+        }
+    }
     //TODO: add Read, Update, Destroy. 
 }
