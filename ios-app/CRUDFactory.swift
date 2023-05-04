@@ -53,6 +53,15 @@ extension DatabaseConnection {
                     return
                 }
         
+        if sqlite3_bind_double(self.insertEntryStmt, 7, Record.latitude) != SQLITE_OK {
+            print("Error inserting latitude")
+            return
+        }
+        
+        if sqlite3_bind_double(self.insertEntryStmt, 8, Record.longitude) != SQLITE_OK {
+            print("Error inserting longitude")
+            return
+        }
         let r = sqlite3_step(self.insertEntryStmt)
         if r != SQLITE_DONE {
             print("Error inserting record")
@@ -62,7 +71,7 @@ extension DatabaseConnection {
     
     func readRecord(cowId: String) -> Record{
         
-        let emptyRecord: Record = Record(cowId: "N/A", birthYear: "N/A", vaxStatus: "N/A" , lastWeight: -1.0 , pregStatus: -1, sex: "N/A")
+        let emptyRecord: Record = Record(cowId: "N/A", birthYear: "N/A", vaxStatus: "N/A" , lastWeight: -1.0 , pregStatus: -1, sex: "N/A", latitude: -0, longitude: -0)
         
         
         guard self.prepareRetrievalStatement() == SQLITE_OK else { return emptyRecord}
@@ -89,8 +98,10 @@ extension DatabaseConnection {
             let lastWeight = sqlite3_column_double(readEntryStmt, 4)
             let pregStatus = sqlite3_column_int(readEntryStmt, 5)
             let sex = String(cString: sqlite3_column_text(readEntryStmt, 6))
+            let lat = sqlite3_column_double(readEntryStmt, 7)
+            let long = sqlite3_column_double(readEntryStmt, 8)
             
-            let record: Record = Record(cowId: cowId, birthYear: birthYear, vaxStatus: vaxStatus, lastWeight: lastWeight, pregStatus: Int(pregStatus), sex: sex)
+            let record: Record = Record(cowId: cowId, birthYear: birthYear, vaxStatus: vaxStatus, lastWeight: lastWeight, pregStatus: Int(pregStatus), sex: sex, latitude: lat, longitude: long)
             
             return record
             
@@ -99,5 +110,5 @@ extension DatabaseConnection {
                   return emptyRecord;
         }
     }
-    //TODO: add Read, Update, Destroy. 
+    //TODO: Update, Destroy.
 }

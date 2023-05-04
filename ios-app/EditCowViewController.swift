@@ -38,7 +38,7 @@ class EditCowViewController: UIViewController {
           (5)Top displays Cow #32 (Name). Tapping on dot indicating cow (on map) will make this screen come up and label corresponding to cow will be displayed in future?
          */
         let con: DatabaseConnection = DatabaseConnection()
-        let record: Record = Record(cowId: newCowName.text!, birthYear: "1920", vaxStatus: newCowVaccinations.text!, lastWeight: Double(newCowWeight.text!)!, pregStatus: 0, sex: "Intersex")
+        let record: Record = Record(cowId: newCowName.text!, birthYear: "1920", vaxStatus: newCowVaccinations.text!, lastWeight: Double(newCowWeight.text!)!, pregStatus: 0, sex: "Intersex", latitude: 8, longitude: 7)
 //        con.updateEntryStmt(newCowName.text!)
         
     }

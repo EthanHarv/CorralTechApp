@@ -28,14 +28,16 @@ class AddCowViewController: UIViewController {
           (3)Add additional text fields for birthYear, pregStatus, sex?
             Or
             Parse all information (birthYear, pregStatus, sex) from "Notes" text field?
+            -SOPHIA ANSWER: Additional text fields, people may not state that in notes and its required for record creation. 
           (4)Is vaxStatus string or "Y/N"? Currently adds string that was input into "Vaccinations" text field. Could change to be "Y/N" depending on if box is emptpy
+                -SOPHIA ANSWER: Vax Status could be some kind of checklist, but its a string right now for simplicity.
          */
         let con: DatabaseConnection = DatabaseConnection()
-        let record: Record = Record(cowId: cowName.text!, birthYear: "1920", vaxStatus: cowVaccinations.text!, lastWeight: Double(cowWeight.text!)!, pregStatus: 0, sex: "M")
+        let record: Record = Record(cowId: cowName.text ?? "", birthYear: "1920", vaxStatus: cowVaccinations.text ?? "", lastWeight: Double(cowWeight.text!) ?? 0.0, pregStatus: 0, sex: "M", latitude: 11.1, longitude: 331.2)
         con.createRecord(Record: record)
         print(con.dbUrl)
         
-        print(con.readRecord(cowId: cowName.text!))
+        print(con.readRecord(cowId: cowName.text!).cowId)
         
     }
 }
