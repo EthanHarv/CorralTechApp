@@ -31,8 +31,11 @@ class AddCowViewController: UIViewController {
           (4)Is vaxStatus string or "Y/N"? Currently adds string that was input into "Vaccinations" text field. Could change to be "Y/N" depending on if box is emptpy
          */
         let con: DatabaseConnection = DatabaseConnection()
-        let record: Record = Record(cowId: cowName.text!, birthYear: "1920", vaxStatus: cowVaccinations.text!, lastWeight: Double(cowWeight.text!)!, pregStatus: 0, sex: "Intersex")
+        let record: Record = Record(cowId: cowName.text!, birthYear: "1920", vaxStatus: cowVaccinations.text!, lastWeight: Double(cowWeight.text!)!, pregStatus: 0, sex: "M")
         con.createRecord(Record: record)
         print(con.dbUrl)
+        
+        print(con.readRecord(cowId: cowName.text!))
+        
     }
 }

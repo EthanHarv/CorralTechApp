@@ -75,7 +75,22 @@ class DatabaseConnection {
         return r;
     }
     
-    //TODO: add Read, Update, Destroy functions.
+    func prepareRetrievalStatement() -> Int32 {
+        
+        guard readEntryStmt == nil else { return SQLITE_OK }
+        
+        let sql = "SELECT * FROM Record where cowId = ?";
+        
+        let r = sqlite3_prepare(db, sql, -1, &readEntryStmt, nil);
+        
+        if r != SQLITE_OK {
+            print("Error occurred with prepared statement");
+            return 1;
+        }
+       
+        return r;
+    }
+    //TODO: add Update, Destroy functions.
 }
 
 
