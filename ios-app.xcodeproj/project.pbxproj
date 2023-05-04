@@ -16,6 +16,7 @@
 		A1F02C8729F857F800C591AB /* DatabaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F02C8629F857F800C591AB /* DatabaseConnection.swift */; };
 		A1F02C8B29F861ED00C591AB /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F02C8A29F861ED00C591AB /* Record.swift */; };
 		A1F02C8D29F8625B00C591AB /* CRUDFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F02C8C29F8625B00C591AB /* CRUDFactory.swift */; };
+		BC61F9262A04767F00350EBE /* NonClusteringMKMarkerAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC61F9252A04767F00350EBE /* NonClusteringMKMarkerAnnotationView.swift */; };
 		BCDAE53C29F89B0500384536 /* MainUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDAE53B29F89B0500384536 /* MainUIViewController.swift */; };
 		BCDAE53E29F89B2800384536 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDAE53D29F89B2800384536 /* SettingsViewController.swift */; };
 		BCDAE54029F89B4D00384536 /* AddCowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDAE53F29F89B4D00384536 /* AddCowViewController.swift */; };
@@ -34,6 +35,7 @@
 		A1F02C8629F857F800C591AB /* DatabaseConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConnection.swift; sourceTree = "<group>"; };
 		A1F02C8A29F861ED00C591AB /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		A1F02C8C29F8625B00C591AB /* CRUDFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRUDFactory.swift; sourceTree = "<group>"; };
+		BC61F9252A04767F00350EBE /* NonClusteringMKMarkerAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonClusteringMKMarkerAnnotationView.swift; sourceTree = "<group>"; };
 		BCDAE53B29F89B0500384536 /* MainUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUIViewController.swift; sourceTree = "<group>"; };
 		BCDAE53D29F89B2800384536 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BCDAE53F29F89B4D00384536 /* AddCowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCowViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		6FE3F76529E8BB1000055D21 /* ios-app */ = {
 			isa = PBXGroup;
 			children = (
+				BC61F9252A04767F00350EBE /* NonClusteringMKMarkerAnnotationView.swift */,
 				6FE3F76629E8BB1000055D21 /* AppDelegate.swift */,
 				6FE3F76829E8BB1000055D21 /* SceneDelegate.swift */,
 				6FE3F76A29E8BB1000055D21 /* LoginViewController.swift */,
@@ -159,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC61F9262A04767F00350EBE /* NonClusteringMKMarkerAnnotationView.swift in Sources */,
 				BCDAE53C29F89B0500384536 /* MainUIViewController.swift in Sources */,
 				A1F02C8D29F8625B00C591AB /* CRUDFactory.swift in Sources */,
 				A1F02C8729F857F800C591AB /* DatabaseConnection.swift in Sources */,
