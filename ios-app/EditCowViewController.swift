@@ -9,6 +9,9 @@ import UIKit
 
 class EditCowViewController: UIViewController {
 
+    var cowName = ""
+    
+    @IBOutlet weak var cowNameLabel: UILabel!
     @IBOutlet weak var newCowName: UITextField!
     @IBOutlet weak var newCowWeight: UITextField!
     @IBOutlet weak var newCowVaccinations: UITextField!
@@ -18,9 +21,11 @@ class EditCowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        cowNameLabel.text = cowName
         // Do any additional setup after loading the view.
     }
-    
+        
     
     @IBAction func updateCow(_ sender: Any) {
         /*

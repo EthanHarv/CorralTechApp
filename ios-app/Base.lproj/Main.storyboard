@@ -160,6 +160,7 @@
                     <navigationItem key="navigationItem" id="1yk-fU-Xb9"/>
                     <connections>
                         <outlet property="mapView" destination="zNU-Yo-iAU" id="4oa-Is-251"/>
+                        <segue destination="de9-FU-BuN" kind="presentation" identifier="ToCowEdit" id="UNk-Ul-Xbm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EK3-9l-AsN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -238,7 +239,7 @@
             <objects>
                 <viewController id="de9-FU-BuN" customClass="EditCowViewController" customModule="ios_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AG8-wc-e2Z">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cow #32 (Name)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CuH-qq-oMR">
@@ -327,6 +328,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="EIH-U6-aTA"/>
+                    <connections>
+                        <outlet property="cowNameLabel" destination="CuH-qq-oMR" id="fxY-xo-Ux9"/>
+                        <outlet property="newCowName" destination="wCe-OU-kFe" id="O6X-Zl-rzt"/>
+                        <outlet property="newCowNotes" destination="bnN-ZE-Qs5" id="O8Y-77-BmA"/>
+                        <outlet property="newCowVaccinations" destination="ulO-nn-rQ2" id="gG4-Ja-ITk"/>
+                        <outlet property="newCowWeight" destination="Eld-RF-cy2" id="FZR-kO-jsJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amN-Yw-Jx1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -440,7 +448,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fkB-6G-Ky3"/>
+        <segue reference="Mvc-TV-tvd"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
