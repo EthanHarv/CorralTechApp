@@ -9,30 +9,43 @@ import UIKit
 import MapKit
 
 class NonClusteringMKMarkerAnnotationView: MKAnnotationView {
+    
+    // Label that will display below the cow (for showing cow name/id).
     private var titleLabel: UILabel!
+    
+    // For external use, required for title to display below cow mark.
+    func setTitle(_ title: String) {
+        titleLabel.text = title
+    }
 
+    // Override so pins will not hide behind other pins that are too close.
     override var annotation: MKAnnotation? {
         willSet {
             displayPriority = .required
         }
     }
+    
+    // Required Plumbing
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         setupCustomImage()
         setupTitleLabel()
     }
 
+    // Required Plumbing
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupCustomImage()
         setupTitleLabel()
     }
 
+    // Configure marker to have cow image, pulls cow_icon from project assets
     private func setupCustomImage() {
         image = resizeImage(UIImage(named: "cow_icon"), targetSize: CGSize(width: 32, height: 32))
         canShowCallout = true
     }
     
+    // Initialize name/id label to go below cow icon.
     private func setupTitleLabel() {
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 12)
@@ -47,11 +60,8 @@ class NonClusteringMKMarkerAnnotationView: MKAnnotationView {
             titleLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: 2)
         ])
     }
-    
-    func setTitle(_ title: String) {
-        titleLabel.text = title
-    }
-    
+        
+    // Ensures our high-quality image is properly sized.
     private func resizeImage(_ image: UIImage?, targetSize: CGSize) -> UIImage? {
         guard let image = image else {
             return nil

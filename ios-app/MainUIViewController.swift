@@ -9,22 +9,23 @@ import UIKit
 import MapKit
 import FuzzyFind
 
+// Controls the primary map page of the application.
 class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate {
     
-    @IBOutlet weak var mapView: MKMapView!
+    /*
+    // MARK: - Controller Setup & Vars
+    */
     
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Delegate our map view to use "func mapView" (below) to handle interactions
+        // Delegate our map view to use "func mapView"'s (below) to handle interactions
         mapView.delegate = self
+        // Same idea, search bar text change delegation.
         searchBar.delegate = self
-            
-        // Considerig these
-//        mapView.isZoomEnabled = false
-//        mapView.isScrollEnabled = false
         
         // Set map location
         let coordinate = CLLocationCoordinate2D(
@@ -33,34 +34,24 @@ class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDele
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
         
-        setCowLocations()
+        // Draw cows onto map as cow markers.
+        setCowMarkers()
     }
     
-    func setCowLocations() {
-        let con = DatabaseConnection()
-        print("NUMBER REC", con.readAllRecords().count)
-        
-        mapView.removeAnnotations(mapView.annotations)
-
-        
-        for cow in con.readAllRecords() {
-            let cowLocation = MKPointAnnotation()
-            cowLocation.title = cow.cowId
-            cowLocation.coordinate = CLLocationCoordinate2D(latitude: cow.latitude, longitude: cow.longitude)
-            
-            mapView.addAnnotation(cowLocation)
-        }
-    }
+    /*
+    // MARK: - Utility functions
+    */
     
-    func searchCowLocations(_ term: String) {
+    // Displays all cows matching search term.
+    // "" matches all cows.
+    private func setCowMarkers(_ searchTerm: String = "") {
         let con = DatabaseConnection()
-        print("NUMBER REC", con.readAllRecords().count)
         
         mapView.removeAnnotations(mapView.annotations)
         
         for cow in con.readAllRecords() {
             
-            if bestMatch(query: term, input: cow.cowId) == nil {continue}
+            if bestMatch(query: searchTerm, input: cow.cowId) == nil {continue}
             
             let cowLocation = MKPointAnnotation()
             cowLocation.title = cow.cowId
@@ -70,8 +61,11 @@ class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDele
         }
     }
 
+    /*
+    // MARK: - Delegates
+    */
     
-    // Handles touch events for annotations
+    // Handles touch events for annotations, segues to edit page
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // Handle the annotation selection
         if let annotation = view.annotation as? MKPointAnnotation {
@@ -81,12 +75,14 @@ class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDele
     
     // Exists to prevent pins from "clustering" — hiding behind eachother.
     // (Makes pins stay _always_ visible)
+    // Also ensure icons and label show up properly
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else {
             return nil
         }
         
         if annotation is MKPointAnnotation {
+            // Use our custom annotation view
             let view = NonClusteringMKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotation")
             view.setTitle((annotation.title ?? "") ?? "")
             return view
@@ -94,27 +90,17 @@ class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDele
         
         return nil
     }
-        
+    
+    // Search runs on each text change, displaying all fuzzy-matches.
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let searchText = searchBar.text {
-            if searchText.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-                setCowLocations()
-                return
-            }
-            // Perform the search with the searchText
-            print("Search for: \(searchText)")
-            searchCowLocations(searchText)
+            // Trim input and search
+            setCowMarkers(searchText.trimmingCharacters(in: .whitespacesAndNewlines))
         }
     }
     
     /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
     */
     
     // Segue to cow edit
@@ -122,11 +108,8 @@ class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDele
         if segue.identifier == "ToCowEdit" {
             if let destinationVC = segue.destination as? EditCowViewController,
                let cowName = sender as? String {
-                // Use the dataReceived in your destination view controller
                 destinationVC.originalCowName = cowName
             }
         }
     }
-
-
 }

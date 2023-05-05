@@ -17,13 +17,12 @@ class AddCowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Set textView border styles
         let borderColor : UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
         cowNotes.layer.borderWidth = 1
         cowNotes.layer.borderColor = borderColor.cgColor
         cowVaccinations.layer.borderWidth = 1
         cowVaccinations.layer.borderColor = borderColor.cgColor
-
     }
     
     

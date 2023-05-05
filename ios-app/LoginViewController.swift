@@ -7,25 +7,18 @@
 
 import UIKit
 
-// god i love terrible practices
+// god i love terrible practices :)
+// In a real login scenerio, this would all be database-handled with proper key auth and such.
 var GLOBAL_USERNAME: String = "Username"
 
 class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
+    // Store username in global variable so we can display it in the settings page.
     @IBAction func UsernameInput(_ sender: UITextField) {
         GLOBAL_USERNAME = sender.text ?? "Username"
     }
-    
-    @IBAction func loginButtonPressed(_ sender: Any) {
-        let con: DatabaseConnection = DatabaseConnection()
-//        let record: Record = Record(cowId: "KF0MKL", birthYear: "1920", vaxStatus: "none of them (#natural)", lastWeight: 2.0, pregStatus: 0, sex: "Intersex")
-//        con.createRecord(Record: record)
-        print("Database URL", con.dbUrl)
-    }
 }
-

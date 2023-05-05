@@ -74,7 +74,6 @@
                                     <color key="baseBackgroundColor" systemColor="systemRedColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="twi-CJ-tg0"/>
                                     <segue destination="6Yo-XQ-69f" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="H6l-il-ad1"/>
                                 </connections>
                             </button>
@@ -479,8 +478,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iIA-VF-UPR"/>
-        <segue reference="mtc-aH-jbt"/>
+        <segue reference="H6l-il-ad1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
