@@ -14,8 +14,8 @@ class EditCowViewController: UIViewController {
     @IBOutlet weak var cowNameLabel: UILabel!
     @IBOutlet weak var newCowName: UITextField!
     @IBOutlet weak var newCowWeight: UITextField!
-    @IBOutlet weak var newCowVaccinations: UITextField!
-    @IBOutlet weak var newCowNotes: UITextField!
+    @IBOutlet weak var newCowVaccinations: UITextView!
+    @IBOutlet weak var newCowNotes: UITextView!
     
     
     override func viewDidLoad() {
@@ -31,8 +31,44 @@ class EditCowViewController: UIViewController {
         newCowWeight.text = String(rec.lastWeight)
         newCowVaccinations.text = rec.vaxStatus
         newCowNotes.text = rec.sex
+        
+        let borderColor : UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        newCowNotes.layer.borderWidth = 1
+        newCowNotes.layer.borderColor = borderColor.cgColor
+        newCowVaccinations.layer.borderWidth = 1
+        newCowVaccinations.layer.borderColor = borderColor.cgColor
+
     }
         
+    @IBAction func deleteCow(_ sender: Any) {
+        let alert = UIAlertController(title: "Confirmation", message: "Are you sure?", preferredStyle: .alert)
+
+        let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { [self] (_) in
+            // Action to perform when the user confirms
+            // This block is executed when the user taps the "Yes" button
+            
+            let con = DatabaseConnection()
+            print(originalCowName)
+            con.destroyCow(cowId: originalCowName)
+            
+            print("Confirmed")
+            
+            performSegue(withIdentifier: "BackToMainSegue", sender: nil)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            // Action to perform when the user cancels
+            // This block is executed when the user taps the "Cancel" button
+            print("Cancelled")
+        }
+
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+
+        // Present the alert
+        // 'self' here represents the view controller from which you are presenting the alert
+        self.present(alert, animated: true, completion: nil)
+    }
     
     @IBAction func updateCow(_ sender: Any) {
         /*

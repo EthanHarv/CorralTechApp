@@ -213,6 +213,11 @@ extension DatabaseConnection {
            // reset the prepared statement on exit.
            sqlite3_reset(self.destroyStmt)
         }
+        
+        if sqlite3_bind_text(self.destroyStmt, 1, (cowId as NSString).utf8String, -1, nil) != SQLITE_OK {
+            print("Error inserting cowId")
+            return
+        }
        
         if sqlite3_step(destroyStmt) == SQLITE_DONE {
               print("\nSuccessfully deleted row.")

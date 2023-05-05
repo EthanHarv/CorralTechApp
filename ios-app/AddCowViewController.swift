@@ -11,13 +11,19 @@ class AddCowViewController: UIViewController {
 
     @IBOutlet weak var cowName: UITextField!
     @IBOutlet weak var cowWeight: UITextField!
-    @IBOutlet weak var cowVaccinations: UITextField!
-    @IBOutlet weak var cowNotes: UITextField!
+    @IBOutlet weak var cowVaccinations: UITextView!
+    @IBOutlet weak var cowNotes: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let borderColor : UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        cowNotes.layer.borderWidth = 1
+        cowNotes.layer.borderColor = borderColor.cgColor
+        cowVaccinations.layer.borderWidth = 1
+        cowVaccinations.layer.borderColor = borderColor.cgColor
+
     }
     
     

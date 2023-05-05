@@ -7,15 +7,20 @@
 
 import UIKit
 import MapKit
+import FuzzyFind
 
-class MainUIViewController: UIViewController, MKMapViewDelegate {
+class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate {
+    
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Delegate our map view to use "func mapView" (below) to handle interactions
         mapView.delegate = self
+        searchBar.delegate = self
             
         // Considerig these
 //        mapView.isZoomEnabled = false
@@ -32,20 +37,39 @@ class MainUIViewController: UIViewController, MKMapViewDelegate {
     }
     
     func setCowLocations() {
-        // TODO: Dummy data, fill with "actual" cow locs (from db)
         let con = DatabaseConnection()
         print("NUMBER REC", con.readAllRecords().count)
-        for i in con.readAllRecords() {
-            // min: 41.249795, -96.014733
-            // max: 41.255328, -96.004884
+        
+        mapView.removeAnnotations(mapView.annotations)
+
+        
+        for cow in con.readAllRecords() {
+            let cowLocation = MKPointAnnotation()
+            cowLocation.title = cow.cowId
+            cowLocation.coordinate = CLLocationCoordinate2D(latitude: cow.latitude, longitude: cow.longitude)
             
-            let testLocation = MKPointAnnotation()
-            testLocation.title = i.cowId
-            testLocation.coordinate = CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude)
-            
-            mapView.addAnnotation(testLocation)
+            mapView.addAnnotation(cowLocation)
         }
     }
+    
+    func searchCowLocations(_ term: String) {
+        let con = DatabaseConnection()
+        print("NUMBER REC", con.readAllRecords().count)
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        for cow in con.readAllRecords() {
+            
+            if bestMatch(query: term, input: cow.cowId) == nil {continue}
+            
+            let cowLocation = MKPointAnnotation()
+            cowLocation.title = cow.cowId
+            cowLocation.coordinate = CLLocationCoordinate2D(latitude: cow.latitude, longitude: cow.longitude)
+            
+            mapView.addAnnotation(cowLocation)
+        }
+    }
+
     
     // Handles touch events for annotations
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -59,6 +83,18 @@ class MainUIViewController: UIViewController, MKMapViewDelegate {
     // (Makes pins stay _always_ visible)
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         return NonClusteringMKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MyMarker")
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let searchText = searchBar.text {
+            if searchText.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                setCowLocations()
+                return
+            }
+            // Perform the search with the searchText
+            print("Search for: \(searchText)")
+            searchCowLocations(searchText)
+        }
     }
     
     /*
