@@ -144,10 +144,14 @@
                                     <segue destination="uqJ-sO-blZ" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="qjF-3J-r4x"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zNU-Yo-iAU">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pitchEnabled="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNU-Yo-iAU">
                                 <rect key="frame" x="16" y="149" width="361" height="610"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <standardMapConfiguration key="preferredConfiguration"/>
+                                <standardMapConfiguration key="preferredConfiguration">
+                                    <pointOfInterestFilter key="pointOfInterestFilter">
+                                        <includedCategories/>
+                                    </pointOfInterestFilter>
+                                </standardMapConfiguration>
                             </mapView>
                             <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Hmt-Wh-Qvg">
                                 <rect key="frame" x="104" y="77" width="184" height="44"/>
@@ -475,6 +479,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="iIA-VF-UPR"/>
         <segue reference="mtc-aH-jbt"/>
     </inferredMetricsTieBreakers>
     <resources>

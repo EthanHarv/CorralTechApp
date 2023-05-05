@@ -17,6 +17,8 @@ class EditCowViewController: UIViewController {
     @IBOutlet weak var newCowVaccinations: UITextView!
     @IBOutlet weak var newCowNotes: UITextView!
     
+    var initialLat = 41.249795;
+    var initialLon = -96.004884;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,9 @@ class EditCowViewController: UIViewController {
         
         let con = DatabaseConnection()
         let rec = con.readRecord(cowId: originalCowName)
+        
+        initialLat = rec.latitude
+        initialLon = rec.longitude
         
         newCowName.text = rec.cowId
         newCowWeight.text = String(rec.lastWeight)
@@ -80,10 +85,10 @@ class EditCowViewController: UIViewController {
             Parse all information (birthYear, pregStatus, sex) from "Notes" text field?
           (5)Top displays Cow #32 (Name). Tapping on dot indicating cow (on map) will make this screen come up and label corresponding to cow will be displayed in future?
          */
-        let lat = Double.random(in: 41.249795 ..< 41.255328)
-        let lon = Double.random(in: -96.014733 ..< -96.004884)
+//        let lat = Double.random(in: 41.249795 ..< 41.255328)
+//        let lon = Double.random(in: -96.014733 ..< -96.004884)
         let con: DatabaseConnection = DatabaseConnection()
-        let record: Record = Record(cowId: newCowName.text!, birthYear: "1920", vaxStatus: newCowVaccinations.text!, lastWeight: Double(newCowWeight.text!) ?? 0, pregStatus: 0, sex: newCowNotes.text!, latitude: lat, longitude: lon)
+        let record: Record = Record(cowId: newCowName.text!, birthYear: "1920", vaxStatus: newCowVaccinations.text!, lastWeight: Double(newCowWeight.text!) ?? 0, pregStatus: 0, sex: newCowNotes.text!, latitude: initialLat, longitude: initialLon)
         print("ok")
         con.replaceRecord(cowId: originalCowName, record: record)
         //BackToMainSegue

@@ -28,8 +28,8 @@ class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDele
         
         // Set map location
         let coordinate = CLLocationCoordinate2D(
-            latitude: 41.252856, longitude: -96.010055)
-        let span = MKCoordinateSpan(latitudeDelta: 0.0125, longitudeDelta: 0.0125)
+            latitude: 41.252856, longitude: -96.010255)
+        let span = MKCoordinateSpan(latitudeDelta: 0.011, longitudeDelta: 0.011)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
         
