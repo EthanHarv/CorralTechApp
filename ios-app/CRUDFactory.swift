@@ -204,5 +204,22 @@ extension DatabaseConnection {
             return
         }
     }
-    //TODO: Update, Destroy.
+    
+    func destroyCow(cowId: String){
+        
+        guard self.prepareDestroyStmt() == SQLITE_OK else { return }
+                
+        defer {
+           // reset the prepared statement on exit.
+           sqlite3_reset(self.destroyStmt)
+        }
+       
+        if sqlite3_step(destroyStmt) == SQLITE_DONE {
+              print("\nSuccessfully deleted row.")
+            } else {
+              print("\nCould not delete row.")
+            }
+        
+    }
+    //TODO: Destroy.
 }

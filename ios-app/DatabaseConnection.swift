@@ -16,8 +16,8 @@ class DatabaseConnection {
     var readEntryStmt: OpaquePointer?
     var updateEntryStmt: OpaquePointer?
     var deleteEntryStmt: OpaquePointer?
-    
     var readAllEntryStmt: OpaquePointer?
+    var destroyStmt: OpaquePointer?
     
     init() {
         do {
@@ -125,7 +125,24 @@ class DatabaseConnection {
        
         return r;
     }
-    //TODO: add Destroy functions.
+    
+    func prepareDestroyStmt() -> Int32 {
+        
+        guard destroyStmt == nil else { return SQLITE_OK }
+        
+        let sql = "DELETE FROM Record WHERE cowId = ?";
+        
+        let r = sqlite3_prepare(db, sql, -1, &destroyStmt, nil);
+        
+        if r != SQLITE_OK {
+            print("Error occurred with prepared statement");
+            return 1;
+        }
+       
+        return r;
+    }
+    
+    //TODO: Destroy XCode
 }
 
 
