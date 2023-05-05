@@ -110,5 +110,99 @@ extension DatabaseConnection {
                   return emptyRecord;
         }
     }
+    
+    func readAllRecords() -> [Record]{
+        
+        var recordList: [Record] = [];
+        guard self.prepareRetrievalStatement() == SQLITE_OK else { return recordList}
+                
+        defer {
+           // reset the prepared statement on exit.
+           sqlite3_reset(self.readEntryStmt)
+        }
+  
+        while(sqlite3_step(readEntryStmt) == SQLITE_ROW){
+            
+            let cowId:String = String(cString: sqlite3_column_text(readEntryStmt, 1));
+            let birthYear = String(cString: sqlite3_column_text(readEntryStmt, 2))
+            let vaxStatus = String(cString: sqlite3_column_text(readEntryStmt, 3))
+            let lastWeight = sqlite3_column_double(readEntryStmt, 4)
+            let pregStatus = sqlite3_column_int(readEntryStmt, 5)
+            let sex = String(cString: sqlite3_column_text(readEntryStmt, 6))
+            let lat = sqlite3_column_double(readEntryStmt, 7)
+            let long = sqlite3_column_double(readEntryStmt, 8)
+            
+            let record: Record = Record(cowId: cowId, birthYear: birthYear, vaxStatus: vaxStatus, lastWeight: lastWeight, pregStatus: Int(pregStatus), sex: sex, latitude: lat, longitude: long)
+
+            recordList.append(record);
+        }
+        
+        return recordList;
+    }
+    
+    func replaceRecord(cowId: String, record: Record) {
+        guard self.prepareUpdateStatement() == SQLITE_OK else { return }
+                
+        defer {
+           // reset the prepared statement on exit.
+           sqlite3_reset(self.updateEntryStmt)
+        }
+       
+        //find how to bind a parameter so we can trawl database by cowId
+        
+        if sqlite3_bind_text(self.updateEntryStmt, 9, (cowId as NSString).utf8String, -1, nil) != SQLITE_OK {
+                    print("Error binding cowId param.")
+                return ;
+            }
+        
+        if sqlite3_bind_text(self.insertEntryStmt, 1, (record.cowId as NSString).utf8String, -1, nil) != SQLITE_OK {
+            print("Error inserting cowId")
+            return
+        }
+        
+        if sqlite3_bind_text(self.insertEntryStmt, 2, (record.birthYear as NSString).utf8String, -1, nil) != SQLITE_OK {
+            print("Error inserting birthYear")
+            return
+        }
+        
+        if sqlite3_bind_text(self.insertEntryStmt, 3, (record.vaxStatus as NSString).utf8String, -1, nil) != SQLITE_OK {
+            
+                    print("Error inserting vaxStatus")
+                    return
+                }
+        
+        if sqlite3_bind_double(self.insertEntryStmt, 4, record.lastWeight) != SQLITE_OK {
+            print("Error inserting lastWeight")
+            return
+        }
+        
+        //TRUE/FALSE pregnancy status MUST be fed in as an Int (either 1 or 0)
+        if sqlite3_bind_int(self.insertEntryStmt, 5, Int32(record.pregStatus as Int)) != SQLITE_OK {
+            
+                    print("Error inserting pregStatus")
+                    return
+                }
+        
+        if sqlite3_bind_text(self.insertEntryStmt, 6, (record.sex as NSString).utf8String, -1, nil) != SQLITE_OK {
+            
+                    print("Error inserting sex")
+                    return
+                }
+        
+        if sqlite3_bind_double(self.insertEntryStmt, 7, record.latitude) != SQLITE_OK {
+            print("Error inserting latitude")
+            return
+        }
+        
+        if sqlite3_bind_double(self.insertEntryStmt, 8, record.longitude) != SQLITE_OK {
+            print("Error inserting longitude")
+            return
+        }
+        let r = sqlite3_step(self.insertEntryStmt)
+        if r != SQLITE_DONE {
+            print("Error inserting record")
+            return
+        }
+    }
     //TODO: Update, Destroy.
 }

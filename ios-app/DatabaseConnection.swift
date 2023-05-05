@@ -90,7 +90,23 @@ class DatabaseConnection {
        
         return r;
     }
-    //TODO: add Update, Destroy functions.
+    
+    func prepareUpdateStatement() -> Int32 {
+        
+        guard updateEntryStmt == nil else { return SQLITE_OK }
+        
+        let sql = "UPDATE Record SET cowId = ?, birthYear = ?, vaxStatus = ?, lastWeight = ?, pregStatus = ?, sex = ?, latitude = ?, longitude = ? WHERE cowId = ?";
+        
+        let r = sqlite3_prepare(db, sql, -1, &updateEntryStmt, nil);
+        
+        if r != SQLITE_OK {
+            print("Error occurred with prepared statement");
+            return 1;
+        }
+       
+        return r;
+    }
+    //TODO: add Destroy functions.
 }
 
 
