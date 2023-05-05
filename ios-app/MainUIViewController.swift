@@ -82,9 +82,19 @@ class MainUIViewController: UIViewController, MKMapViewDelegate, UISearchBarDele
     // Exists to prevent pins from "clustering" — hiding behind eachother.
     // (Makes pins stay _always_ visible)
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        return NonClusteringMKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MyMarker")
+        guard !(annotation is MKUserLocation) else {
+            return nil
+        }
+        
+        if annotation is MKPointAnnotation {
+            let view = NonClusteringMKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "CustomAnnotation")
+            view.setTitle((annotation.title ?? "") ?? "")
+            return view
+        }
+        
+        return nil
     }
-    
+        
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let searchText = searchBar.text {
             if searchText.trimmingCharacters(in: .whitespacesAndNewlines) == "" {

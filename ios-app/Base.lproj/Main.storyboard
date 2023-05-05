@@ -475,7 +475,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iIA-VF-UPR"/>
         <segue reference="mtc-aH-jbt"/>
     </inferredMetricsTieBreakers>
     <resources>
