@@ -9,7 +9,7 @@ import UIKit
 
 class EditCowViewController: UIViewController {
 
-    var cowName = ""
+    var originalCowName = ""
     
     @IBOutlet weak var cowNameLabel: UILabel!
     @IBOutlet weak var newCowName: UITextField!
@@ -20,10 +20,17 @@ class EditCowViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
-        cowNameLabel.text = cowName
+        cowNameLabel.text = originalCowName
         // Do any additional setup after loading the view.
+        
+        let con = DatabaseConnection()
+        let rec = con.readRecord(cowId: originalCowName)
+        
+        newCowName.text = rec.cowId
+        newCowWeight.text = String(rec.lastWeight)
+        newCowVaccinations.text = rec.vaxStatus
+        newCowNotes.text = rec.sex
     }
         
     
@@ -37,9 +44,13 @@ class EditCowViewController: UIViewController {
             Parse all information (birthYear, pregStatus, sex) from "Notes" text field?
           (5)Top displays Cow #32 (Name). Tapping on dot indicating cow (on map) will make this screen come up and label corresponding to cow will be displayed in future?
          */
+        let lat = Double.random(in: 41.249795 ..< 41.255328)
+        let lon = Double.random(in: -96.014733 ..< -96.004884)
         let con: DatabaseConnection = DatabaseConnection()
-        let record: Record = Record(cowId: newCowName.text!, birthYear: "1920", vaxStatus: newCowVaccinations.text!, lastWeight: Double(newCowWeight.text!)!, pregStatus: 0, sex: "Intersex", latitude: 8, longitude: 7)
-//        con.updateEntryStmt(newCowName.text!)
-        
+        let record: Record = Record(cowId: newCowName.text!, birthYear: "1920", vaxStatus: newCowVaccinations.text!, lastWeight: Double(newCowWeight.text!) ?? 0, pregStatus: 0, sex: newCowNotes.text!, latitude: lat, longitude: lon)
+        print("ok")
+        con.replaceRecord(cowId: originalCowName, record: record)
+        //BackToMainSegue
+        performSegue(withIdentifier: "BackToMainSegue", sender: nil)
     }
 }

@@ -32,8 +32,11 @@ class AddCowViewController: UIViewController {
           (4)Is vaxStatus string or "Y/N"? Currently adds string that was input into "Vaccinations" text field. Could change to be "Y/N" depending on if box is emptpy
                 -SOPHIA ANSWER: Vax Status could be some kind of checklist, but its a string right now for simplicity.
          */
+        let lat = Double.random(in: 41.249795 ..< 41.255328)
+        let lon = Double.random(in: -96.014733 ..< -96.004884)
+
         let con: DatabaseConnection = DatabaseConnection()
-        let record: Record = Record(cowId: cowName.text ?? "", birthYear: "1920", vaxStatus: cowVaccinations.text ?? "", lastWeight: Double(cowWeight.text!) ?? 0.0, pregStatus: 0, sex: "M", latitude: 11.1, longitude: 331.2)
+        let record: Record = Record(cowId: cowName.text ?? "", birthYear: "1920", vaxStatus: cowVaccinations.text ?? "", lastWeight: Double(cowWeight.text!) ?? 0.0, pregStatus: 0, sex: cowNotes.text!, latitude: lat, longitude: lon)
         con.createRecord(Record: record)
         print(con.dbUrl)
         

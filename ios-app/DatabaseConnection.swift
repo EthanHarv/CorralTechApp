@@ -17,6 +17,8 @@ class DatabaseConnection {
     var updateEntryStmt: OpaquePointer?
     var deleteEntryStmt: OpaquePointer?
     
+    var readAllEntryStmt: OpaquePointer?
+    
     init() {
         do {
             self.dbUrl = try FileManager.default
@@ -52,7 +54,7 @@ class DatabaseConnection {
     
     private func createTable() {
 
-       let ret =  sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Record (id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, cowId TEXT UNIQUE NOT NULL, birthYear TEXT NOT NULL, vaxStatus TEXT NOT NULL, lastWeight DOUBLE, pregStatus INTEGER NOT NULL, sex TEXT NOT NULL)", nil, nil, nil)
+       let ret =  sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Record (id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, cowId TEXT UNIQUE NOT NULL, birthYear TEXT NOT NULL, vaxStatus TEXT NOT NULL, lastWeight DOUBLE, pregStatus INTEGER NOT NULL, sex TEXT NOT NULL, latitude DOUBLE, longitude DOUBLE)", nil, nil, nil)
        if (ret != SQLITE_OK) { // corrupt database.
             fatalError("unable to create table Records")
        }
@@ -63,7 +65,7 @@ class DatabaseConnection {
         
         guard insertEntryStmt == nil else { return SQLITE_OK }
         
-        let sql = "INSERT INTO Record (cowId, birthYear, vaxStatus, lastWeight, pregStatus, sex) VALUES (?,?,?,?,?,?)";
+        let sql = "INSERT INTO Record (cowId, birthYear, vaxStatus, lastWeight, pregStatus, sex, latitude, longitude) VALUES (?,?,?,?,?,?,?,?)";
         
         let r = sqlite3_prepare(db, sql, -1, &insertEntryStmt, nil);
         
@@ -90,6 +92,23 @@ class DatabaseConnection {
        
         return r;
     }
+    
+    func prepareReadAllStatement() -> Int32 {
+        
+        guard readAllEntryStmt == nil else { return SQLITE_OK }
+        
+        let sql = "SELECT * FROM Record";
+        
+        let r = sqlite3_prepare(db, sql, -1, &readAllEntryStmt, nil);
+        
+        if r != SQLITE_OK {
+            print("Error occurred with prepared statement");
+            return 1;
+        }
+       
+        return r;
+    }
+
     
     func prepareUpdateStatement() -> Int32 {
         

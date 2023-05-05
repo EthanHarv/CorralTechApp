@@ -16,7 +16,7 @@ class MainUIViewController: UIViewController, MKMapViewDelegate {
         
         // Delegate our map view to use "func mapView" (below) to handle interactions
         mapView.delegate = self
-        
+            
         // Considerig these
 //        mapView.isZoomEnabled = false
 //        mapView.isScrollEnabled = false
@@ -33,15 +33,15 @@ class MainUIViewController: UIViewController, MKMapViewDelegate {
     
     func setCowLocations() {
         // TODO: Dummy data, fill with "actual" cow locs (from db)
-        for i in 1...5 {
+        let con = DatabaseConnection()
+        print("NUMBER REC", con.readAllRecords().count)
+        for i in con.readAllRecords() {
             // min: 41.249795, -96.014733
             // max: 41.255328, -96.004884
-            let lat = Double.random(in: 41.249795 ..< 41.255328)
-            let lon = Double.random(in: -96.014733 ..< -96.004884)
             
             let testLocation = MKPointAnnotation()
-            testLocation.title = "cow " + String(i)
-            testLocation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            testLocation.title = i.cowId
+            testLocation.coordinate = CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude)
             
             mapView.addAnnotation(testLocation)
         }
@@ -77,7 +77,7 @@ class MainUIViewController: UIViewController, MKMapViewDelegate {
             if let destinationVC = segue.destination as? EditCowViewController,
                let cowName = sender as? String {
                 // Use the dataReceived in your destination view controller
-                destinationVC.cowName = cowName
+                destinationVC.originalCowName = cowName
             }
         }
     }
