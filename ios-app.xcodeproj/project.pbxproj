@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F50EC622A04C3A800B9167B /* FuzzyFind in Frameworks */ = {isa = PBXBuildFile; productRef = 6F50EC612A04C3A800B9167B /* FuzzyFind */; };
 		6FE3F76729E8BB1000055D21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3F76629E8BB1000055D21 /* AppDelegate.swift */; };
 		6FE3F76929E8BB1000055D21 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3F76829E8BB1000055D21 /* SceneDelegate.swift */; };
 		6FE3F76B29E8BB1000055D21 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3F76A29E8BB1000055D21 /* LoginViewController.swift */; };
@@ -47,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F50EC622A04C3A800B9167B /* FuzzyFind in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +109,9 @@
 			dependencies = (
 			);
 			name = "ios-app";
+			packageProductDependencies = (
+				6F50EC612A04C3A800B9167B /* FuzzyFind */,
+			);
 			productName = "ios-app";
 			productReference = 6FE3F76329E8BB1000055D21 /* ios-app.app */;
 			productType = "com.apple.product-type.application";
@@ -135,6 +140,9 @@
 				Base,
 			);
 			mainGroup = 6FE3F75A29E8BB1000055D21;
+			packageReferences = (
+				6F50EC602A04C3A800B9167B /* XCRemoteSwiftPackageReference "FuzzyFind" */,
+			);
 			productRefGroup = 6FE3F76429E8BB1000055D21 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -390,6 +398,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6F50EC602A04C3A800B9167B /* XCRemoteSwiftPackageReference "FuzzyFind" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/truizlop/FuzzyFind";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6F50EC612A04C3A800B9167B /* FuzzyFind */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6F50EC602A04C3A800B9167B /* XCRemoteSwiftPackageReference "FuzzyFind" */;
+			productName = FuzzyFind;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6FE3F75B29E8BB1000055D21 /* Project object */;
 }
